@@ -108,8 +108,8 @@ def main():
             )
             col3.metric(
                 "交易量",
-                f"{int(today_data["trade_volume"]):,}",
-                f"{int(today_data["trade_volume"])-int(yesterday_data["trade_volume"]):,}",
+                f'{int(today_data["trade_volume"]):,}',
+                f'{int(today_data["trade_volume"])-int(yesterday_data["trade_volume"]):,}',
                 delta_color="inverse",
             )
 

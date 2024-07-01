@@ -47,7 +47,7 @@ def main():
         """
         st.write_stream(stream_data(message))
         st.write("流程架構")
-        st.image(r"streamlit_app\flow.png", caption="flow")
+        st.image("streamlit_app/flow.png", caption="flow")
     with tab2:
         stock_list = get_stock_list()
         options = {" ".join(stock.values()): stock["code"] for stock in stock_list}

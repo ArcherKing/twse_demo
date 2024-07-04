@@ -37,7 +37,7 @@ def main():
         message = """
         🤗嗨，我是Archer，
         這是我的台股每日交易資料工程展示作品，內容僅供參考。
-        備註：部分交易歷史資料尚不完整，每日交易資料將在交易日(?)下午兩點更新，請稍等後重新整理畫面。
+        備註：部分交易歷史資料尚不完整，每日交易資料將在交易日下午兩點更新，請稍等後重新整理畫面。
         感謝您撥冗閱覽，祝您有愉快的一天。
         
         🤗Hello, I'm Archer.
@@ -76,16 +76,28 @@ def main():
                 .astype(float)
             )
             stock_daily_df["opening_price"] = (
-                stock_daily_df["opening_price"].str.replace("$", "").astype(float)
+                stock_daily_df["opening_price"]
+                .str.replace("$", "")
+                .str.replace(",", "")
+                .astype(float)
             )
             stock_daily_df["highest_price"] = (
-                stock_daily_df["highest_price"].str.replace("$", "").astype(float)
+                stock_daily_df["highest_price"]
+                .str.replace("$", "")
+                .str.replace(",", "")
+                .astype(float)
             )
             stock_daily_df["lowest_price"] = (
-                stock_daily_df["lowest_price"].str.replace("$", "").astype(float)
+                stock_daily_df["lowest_price"]
+                .str.replace("$", "")
+                .str.replace(",", "")
+                .astype(float)
             )
             stock_daily_df["closing_price"] = (
-                stock_daily_df["closing_price"].str.replace("$", "").astype(float)
+                stock_daily_df["closing_price"]
+                .str.replace("$", "")
+                .str.replace(",", "")
+                .astype(float)
             )
             stock_daily_df["change"] = (
                 stock_daily_df["change"]
@@ -107,7 +119,7 @@ def main():
                 delta_color="inverse",
             )
             col3.metric(
-                "交易量",
+                "成功股數",
                 f'{int(today_data["trade_volume"]):,}',
                 f'{int(today_data["trade_volume"])-int(yesterday_data["trade_volume"]):,}',
                 delta_color="inverse",

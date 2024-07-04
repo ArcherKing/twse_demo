@@ -119,7 +119,7 @@ def main():
                 delta_color="inverse",
             )
             col3.metric(
-                "成功股數",
+                "成交量(股)",
                 f'{int(today_data["trade_volume"]):,}',
                 f'{int(today_data["trade_volume"])-int(yesterday_data["trade_volume"]):,}',
                 delta_color="inverse",
@@ -185,7 +185,7 @@ def main():
                     "highest_price": st.column_config.NumberColumn("最高價"),
                     "lowest_price": st.column_config.NumberColumn("最低價"),
                     "closing_price": st.column_config.NumberColumn("收盤價"),
-                    "trade_volume": st.column_config.NumberColumn("交易量"),
+                    "trade_volume": st.column_config.NumberColumn("成交量(股)"),
                 },
                 hide_index=True,
                 use_container_width=True,
@@ -218,7 +218,7 @@ def main():
                 .mark_line(clip=True)
                 .encode(
                     alt.X("trade_date").title("交易日期"),
-                    alt.Y("closing_price").title("收盤價"),
+                    alt.Y("closing_price").title("股價"),
                 )
                 .interactive(bind_y=False)
             )
@@ -229,7 +229,7 @@ def main():
                 .mark_line(clip=True)
                 .encode(
                     alt.X("trade_date").title("交易日期"),
-                    alt.Y("trade_volume").title("交易量"),
+                    alt.Y("trade_volume").title("成交量(股)"),
                 )
                 .interactive(bind_y=False)
             )

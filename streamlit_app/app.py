@@ -73,7 +73,7 @@ def main():
         (
             col1,
             col2,
-        ) = st.columns(2, vertical_alignment="center", spec=[0.7, 0.3])
+        ) = st.columns(spec=[0.7, 0.3], vertical_alignment="center", )
         with col1:
             st.image("streamlit_app/stock.jpg", caption="STOCK")
         with col2:

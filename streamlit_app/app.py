@@ -36,13 +36,14 @@ def main():
     with tab1:
         message_1 = """
         嗨，我是Archer🤗\n
-        這是一個台股每日交易資料流程自動化的資料工程展示作品，內容僅供參考。
-        資料來源為TWSE臺灣證券交易所，使用技術工具包含如下：
-        Azure Functions (free tier)
-        Azure Database for PostgreSQL (free tier)
-        LINE Notify
-        Streamlit
-        GitHub
+        這是一個台股每日交易資料流程自動化的資料工程展示作品，內容僅供參考。\n
+        請點擊上方 HOME 右邊的 STOCK 頁籤查看。\n
+        資料來源為TWSE臺灣證券交易所，使用技術工具包含如下：\n
+        1. Azure Functions (free tier)\n
+        2. Azure Database for PostgreSQL (free tier)\n
+        3. LINE Notify\n
+        4. Streamlit\n
+        5. GitHub
         """
         message_2 = """
         感謝您撥冗閱覽，祝您有愉快的一天。\n
@@ -74,11 +75,14 @@ def main():
 
         st.write_stream(stream_data(message_1))
         st.write_stream(stream_data(message_eng_1))
-        st.write("流程架構：")
-        st.image("streamlit_app/flow.png", caption="flow")
+        st.image("streamlit_app/flow.png", caption="流程架構")
         st.write_stream(stream_data(message_flow))
         st.write_stream(stream_data(message_2))
         st.write_stream(stream_data(message_eng_2))
+
+        st.image("streamlit_app/stock.jpg", caption="STOCK")
+        st.image("streamlit_app/line_notify.jpg", caption="LINE Notify")
+        st.image("streamlit_app/azure.jpg", caption="Azure")
     with tab2:
         stock_list = get_stock_list()
         options = {" ".join(stock.values()): stock["code"] for stock in stock_list}

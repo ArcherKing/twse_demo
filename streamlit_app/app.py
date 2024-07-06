@@ -73,14 +73,12 @@ def main():
         (
             col1,
             col2,
-            col3,
-        ) = st.columns(3)
+        ) = st.columns(2, vertical_alignment="center", spec=[0.7, 0.3])
         with col1:
             st.image("streamlit_app/stock.jpg", caption="STOCK")
         with col2:
             st.image("streamlit_app/line_notify.jpg", caption="LINE Notify")
-        with col3:
-            st.image("streamlit_app/azure.jpg", caption="Azure")
+        st.image("streamlit_app/azure.jpg", caption="Azure")
 
     with tab2:
         stock_list = get_stock_list()

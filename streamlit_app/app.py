@@ -34,20 +34,51 @@ def stream_data(message: str):
 def main():
     tab1, tab2 = st.tabs(["HOME", "STOCK"])
     with tab1:
-        message = """
-        🤗嗨，我是Archer，
-        這是我的台股每日交易資料工程展示作品，內容僅供參考。
-        備註：部分交易歷史資料尚不完整，每日交易資料將在交易日下午兩點半更新，請稍等後重新整理畫面。
-        感謝您撥冗閱覽，祝您有愉快的一天。
-        
-        🤗Hello, I'm Archer.
-        This is my TWSE daily trading data engineering demo, for reference only.
-        Note: Some historical trading data might be incomplete. The daily trading data will be updated at 2:00 PM on each trading day. Please wait and refresh the screen.
-        Thank you for your time and have a great day.
+        message_1 = """
+        嗨，我是Archer🤗\n
+        這是一個台股每日交易資料流程自動化的資料工程展示作品，內容僅供參考。
+        資料來源為TWSE臺灣證券交易所，使用技術工具包含如下：
+        Azure Functions (free tier)
+        Azure Database for PostgreSQL (free tier)
+        LINE Notify
+        Streamlit
+        GitHub
         """
-        st.write_stream(stream_data(message))
-        st.write("流程架構")
+        message_2 = """
+        感謝您撥冗閱覽，祝您有愉快的一天。\n
+        備註：部分交易歷史資料尚不完整，每日交易資料將在交易日14:30更新，請稍等後重新整理畫面。
+        """
+        message_eng_1 = """
+        Hello, I'm Archer.🤗\n
+        This is my TWSE daily trading data engineering demo, for reference only
+        """
+        message_eng_2 = """
+        Thank you for your time and have a great day.
+        Note: Some historical trading data might be incomplete. The daily trading data will be updated at 2:30 PM on each trading day. Please wait and refresh the screen.
+        """
+        message_flow = """
+        作業流程主要分為以下2個部分：\n\n
+        
+        A. 每日交易資料收集流程\n
+            1. 使用 Azure Functions 每日排程函數，於 14:30 呼叫 TWSE API 取得每日交易資料\n
+            2. 將資料處理後存入至 Azure Database for PostgreSQL 資料庫中\n
+            3. 呼叫 LINE Notify 通知資料收集成功或失敗\n\n
+            
+        B. 網頁資料視覺化呈現\n
+            1. 使用者在 STOCK 頁籤\n
+            2. 呼叫 Azure Functions API函數取得所有股票\n
+            3. 使用者選取欲查看之股票\n
+            4. 呼叫 Azure Functions API函數取得該股票所有交易資料\n
+            5. 以各種資料呈現方式顯示\n
+        """
+
+        st.write_stream(stream_data(message_1))
+        st.write_stream(stream_data(message_eng_1))
+        st.write("流程架構：")
         st.image("streamlit_app/flow.png", caption="flow")
+        st.write_stream(stream_data(message_flow))
+        st.write_stream(stream_data(message_2))
+        st.write_stream(stream_data(message_eng_2))
     with tab2:
         stock_list = get_stock_list()
         options = {" ".join(stock.values()): stock["code"] for stock in stock_list}

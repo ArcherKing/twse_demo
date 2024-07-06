@@ -49,14 +49,6 @@ def main():
         感謝您撥冗閱覽，祝您有愉快的一天。\n
         備註：部分交易歷史資料尚不完整，每日交易資料將在交易日14:30更新，請稍等後重新整理畫面。
         """
-        message_eng_1 = """
-        Hello, I'm Archer.🤗\n
-        This is my TWSE daily trading data engineering demo, for reference only
-        """
-        message_eng_2 = """
-        Thank you for your time and have a great day.
-        Note: Some historical trading data might be incomplete. The daily trading data will be updated at 2:30 PM on each trading day. Please wait and refresh the screen.
-        """
         message_flow = """
         作業流程主要分為以下2個部分：\n\n
         
@@ -74,15 +66,22 @@ def main():
         """
 
         st.write_stream(stream_data(message_1))
-        st.write_stream(stream_data(message_eng_1))
         st.image("streamlit_app/flow.png", caption="流程架構")
         st.write_stream(stream_data(message_flow))
         st.write_stream(stream_data(message_2))
-        st.write_stream(stream_data(message_eng_2))
 
-        st.image("streamlit_app/stock.jpg", caption="STOCK")
-        st.image("streamlit_app/line_notify.jpg", caption="LINE Notify")
-        st.image("streamlit_app/azure.jpg", caption="Azure")
+        (
+            col1,
+            col2,
+            col3,
+        ) = st.columns(3)
+        with col1:
+            st.image("streamlit_app/stock.jpg", caption="STOCK")
+        with col2:
+            st.image("streamlit_app/line_notify.jpg", caption="LINE Notify")
+        with col3:
+            st.image("streamlit_app/azure.jpg", caption="Azure")
+
     with tab2:
         stock_list = get_stock_list()
         options = {" ".join(stock.values()): stock["code"] for stock in stock_list}

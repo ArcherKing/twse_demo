@@ -12,7 +12,7 @@ message_1 = r"""
 這是一個台股每日交易資料流程自動化的資料工程展示作品，內容僅供參考。\
 請點擊上方 :red[HOME] 右邊的 :blue[STOCK] 頁籤查看使用。
 
-＊該應用非為即時資料顯示，每日交易資料在交易日14:30更新後顯示，請稍等後重新整理畫面。
+＊該應用非為即時資料顯示，每日交易資料在交易日14:40更新後顯示，請稍等後重新整理畫面。
 """
 message_flow = """
 A. 資料來源為TWSE臺灣證券交易所，使用技術工具包含如下：
@@ -28,7 +28,7 @@ B. 作業流程主要分為以下2個部分：
     1. 每日交易資料收集流程
 
         a. 於 Azure Functions 執行
-        b. Azure Functions 每日排程函數，將於 14:30 呼叫 TWSE API 取得每日交易資料
+        b. Azure Functions 每日排程函數，將於 14:40 呼叫 TWSE API 取得每日交易資料
         c. 將資料處理後存入至 Azure Database for PostgreSQL 資料庫中
         d. 呼叫 LINE Notify 通知資料收集結果 (成功或失敗)
         e. 資料收集流程結束
@@ -61,10 +61,10 @@ def stream_data(message: str):
 
 def get_ttl():
     now = datetime.now()
-    next_time_1430 = now.replace(hour=6, minute=30, second=59, microsecond=0)
-    if now > next_time_1430:
-        next_time_1430 += timedelta(days=1)
-    return next_time_1430 - now
+    next_time_1440 = now.replace(hour=6, minute=40, second=59, microsecond=0)
+    if now > next_time_1440:
+        next_time_1440 += timedelta(days=1)
+    return next_time_1440 - now
 
 
 @st.cache_data(ttl=get_ttl())

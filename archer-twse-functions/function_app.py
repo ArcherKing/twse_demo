@@ -139,7 +139,7 @@ def line_notify(message: str) -> None:
 
 
 @app.timer_trigger(
-    schedule="0 30 6 * * *", arg_name="myTimer", run_on_startup=False, use_monitor=False
+    schedule="0 40 6 * * *", arg_name="myTimer", run_on_startup=False, use_monitor=False
 )
 def get_daily_to_db(myTimer: func.TimerRequest) -> None:
     if myTimer.past_due:

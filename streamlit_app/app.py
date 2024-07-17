@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import altair as alt
+import numpy as np
 
 import requests
 import time
@@ -95,11 +96,24 @@ def get_stock_daily_price(stock: str) -> pd.DataFrame:
 
 def _clean_data_and_to_df(stock_daily) -> pd.DataFrame:
     """清理資料並轉為DataFrame"""
-    stock_daily_df = (
-        pd.DataFrame(stock_daily)
-        .replace("None", pd.NA)
-        .dropna()
-        .assign(trade_date=lambda df: pd.to_datetime(df["trade_date"]))
+
+    stock_daily_df = pd.DataFrame(stock_daily).replace("None", pd.NA)
+
+    stock_daily_df["prev_closing_price"] = stock_daily_df["closing_price"].shift(1)
+    stock_daily_df["change"] = stock_daily_df["change"].fillna(
+        (
+            stock_daily_df["closing_price"]
+            .replace({"[$,]": ""}, regex=True)
+            .astype(float)
+            - stock_daily_df["prev_closing_price"]
+            .replace({"[$,]": ""}, regex=True)
+            .astype(float)
+        ).pipe(np.around, decimals=2)
+    )
+    stock_daily_df.drop(columns=["prev_closing_price"], inplace=True)
+
+    stock_daily_df = stock_daily_df.dropna().assign(
+        trade_date=lambda df: pd.to_datetime(df["trade_date"])
     )
 
     filter_col = [
@@ -149,7 +163,7 @@ def fragment_stock() -> None:
             display_stock_info(stock_daily_df, stock)
 
     end_time = datetime.now()
-    st.toast(f"Finished in {(end_time-start_time).total_seconds()} s", icon="✅")
+    st.toast(f"Finished in {(end_time-start_time).total_seconds()} s")
 
 
 def display_stock_info(stock_daily_df, stock) -> None:
